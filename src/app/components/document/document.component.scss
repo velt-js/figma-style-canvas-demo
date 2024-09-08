@@ -1,8 +1,4 @@
 .canvas-container {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
 	background-color: light-dark(var(--light-bg-0), var(--dark-bg-0));
 	width: fit-content;
 	border-radius: 1rem;

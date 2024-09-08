@@ -73,7 +73,7 @@ export class DocumentComponent implements AfterViewInit {
 		});
 
 
-		this.veltCommentsRef.nativeElement?.addEventListener('onCommentAdd', (event: any) => {
+		commentElement?.onCommentAdd().subscribe((event: any) => {
 			console.log('*** onCommentAdd ***');
 
 			const rect = this.canvasRef.nativeElement.getBoundingClientRect();

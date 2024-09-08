@@ -1,0 +1,75 @@
+.canvas-container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: light-dark(var(--light-bg-0), var(--dark-bg-0));
+	width: fit-content;
+	border-radius: 1rem;
+	border: 1px solid light-dark(var(--light-bg-1), var(--dark-bg-1));
+	overflow: hidden;
+	// background-image: url('/assets/dot-tile.svg');
+	background-repeat: repeat;
+	background-size: 24px 24px; // Adjust this value if the SVG size is different
+	overflow: visible;
+
+	.html-canvas {
+		position: absolute;
+		background-color: rgba(255, 255, 255, 0);
+		width: 1000px;
+		height: 720px;
+		z-index: 1;
+		transform-origin: top left;
+	}
+}
+
+canvas {
+	cursor: grab;
+	display: block;
+	background-color: transparent; // Make the canvas background transparent
+
+	&:active {
+		cursor: grabbing;
+	}
+}
+
+.toolbar {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	padding: 0.75rem;
+	width: 100%;
+	z-index: 6;
+}
+
+.zoom-controls {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+
+	button {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		border: none;
+		background-color: light-dark(var(--light-bg-1), var(--dark-bg-1));
+		color: light-dark(var(--light-text-1), var(--dark-text-1));
+		font-size: 20px;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: background-color 0.3s;
+
+		&:hover {
+			background-color: light-dark(var(--light-text-0), var(--dark-text-0));
+		}
+	}
+}
+
+.test {
+	position: absolute;
+	background-color: red;
+	width: 12px;
+	height: 12px;
+}

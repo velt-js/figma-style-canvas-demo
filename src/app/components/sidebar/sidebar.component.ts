@@ -17,6 +17,6 @@ export class SidebarComponent {
 	}
 
 	private checkScreenSize(): void {
-		this.iconOnly = window.innerWidth < 1200;
+		this.iconOnly = window.innerWidth <= 1200;
 	}
 }

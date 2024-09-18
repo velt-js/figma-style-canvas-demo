@@ -44,7 +44,6 @@ export class DocumentComponent implements AfterViewInit {
 
 	private mouseX: number = 0;
 	private mouseY: number = 0;
-
 	// Getting Velt Client
 	client = this.veltService.clientSignal();
 
@@ -60,41 +59,28 @@ export class DocumentComponent implements AfterViewInit {
 				this.client.setDocument('canvas', { documentName: 'canvas' });
 
 				this.client.setDarkMode(true)
+
+				const commentElement = this.client?.getCommentElement()
+
+				commentElement?.onCommentAdd().subscribe((event: any) => {
+					const rect = this.canvasRef.nativeElement.getBoundingClientRect();
+
+					const x = ((this.mouseX - rect.left - this.offsetX) / this.scale)
+					const y = ((this.mouseY - rect.top - this.offsetY) / this.scale)
+
+					event.detail?.addContext({ canvasCommentConfig: { id: 'sample-canvas-comment', position: { x, y } }, commentType: 'manual' });
+					this.mouseX = 0
+					this.mouseY = 0
+				});
 			}
 		});
 	}
 
 	async ngOnInit(): Promise<void> {
-
 		const commentElement = this.client?.getCommentElement()
-
 		commentElement?.getAllCommentAnnotations().subscribe((commentAnnotations: any) => {
 			this.renderCommentAnnotations(commentAnnotations)
 		});
-
-
-		commentElement?.onCommentAdd().subscribe((event: any) => {
-			console.log('*** onCommentAdd ***');
-
-			const rect = this.canvasRef.nativeElement.getBoundingClientRect();
-
-			// console.log({ x: this.mouseX, y: this.mouseY });
-			const x = ((this.mouseX - rect.left - this.offsetX) / this.scale)
-			const y = ((this.mouseY - rect.top - this.offsetY) / this.scale)
-
-			this.test.nativeElement.style.left = x + 'px'
-			this.test.nativeElement.style.top = y + 'px'
-
-			console.log({ x, y });
-
-
-			event.detail?.addContext({ canvasCommentConfig: { id: 'sample-canvas-comment', position: { x, y } }, commentType: 'manual' });
-			this.mouseX = 0
-			this.mouseY = 0
-		});
-
-
-
 	}
 
 	renderCommentAnnotations(commentAnnotations: any) {
@@ -105,7 +91,7 @@ export class DocumentComponent implements AfterViewInit {
 					if (!document.getElementById(`comment-pin-container-${commentAnnotation.annotationId}`) && commentAnnotation.context) {
 						// Add Comment Pin if it doesn't exist
 						const { x, y } = commentAnnotation.context.canvasCommentConfig.position;
-						console.log(x, y)
+						
 						var commentPinContainer = document.createElement('div');
 						commentPinContainer.className = 'comment-pin-container';
 						commentPinContainer.id = `comment-pin-container-${commentAnnotation.annotationId}`;
@@ -250,7 +236,7 @@ export class DocumentComponent implements AfterViewInit {
 		ctx.scale(this.scale, this.scale);
 
 		// Draw a border around the max area
-		ctx.strokeStyle = '#888';
+		ctx.strokeStyle = '#00000000';
 		ctx.lineWidth = 1 / this.scale;
 		ctx.strokeRect(0, 0, this.canvasWidth, this.canvasHeight);
 
@@ -313,11 +299,13 @@ export class DocumentComponent implements AfterViewInit {
 	}
 
 	zoomIn() {
-		this.zoom(1 + this.zoomIntensity, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
+		const scaleFactor = 1.05; // 10% increase
+		this.zoom(scaleFactor, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
 	}
 
 	zoomOut() {
-		this.zoom(1 - this.zoomIntensity, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
+		const scaleFactor = 0.95; // 10% decrease
+		this.zoom(scaleFactor, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
 	}
 
 	@HostListener('mousedown', ['$event'])
@@ -393,8 +381,6 @@ export class DocumentComponent implements AfterViewInit {
 			}
 		}
 	}
-
-
 
 	limitOffset() {
 		const canvas = this.canvasRef.nativeElement;

@@ -24,6 +24,11 @@
 	transition: background-color 150ms ease-in-out;
 }
 
+html,
+body {
+	overflow: hidden;
+}
+
 body {
 	background-color: light-dark(white, black);
 	color: light-dark(black, white);

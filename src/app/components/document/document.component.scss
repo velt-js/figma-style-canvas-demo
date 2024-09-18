@@ -7,7 +7,7 @@
 	// background-image: url('/assets/dot-tile.svg');
 	background-repeat: repeat;
 	background-size: 24px 24px; // Adjust this value if the SVG size is different
-	overflow: visible;
+	position: relative;
 
 	.html-canvas {
 		position: absolute;

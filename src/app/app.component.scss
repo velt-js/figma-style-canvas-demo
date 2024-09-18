@@ -4,6 +4,7 @@ main {
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: flex-start;
+	overflow: hidden;
 
 	.content {
 		flex: 1;

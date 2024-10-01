@@ -131,7 +131,6 @@ export class DocumentComponent implements AfterViewInit {
 		this.zoom(scaleFactor, event.clientX, event.clientY);
 	}
 
-	@HostListener('wheel', ['$event'])
 	onWheel(event: WheelEvent) {
 		if (!this.isZoomingEnabled) return; // Check if zooming is enabled
 
@@ -140,7 +139,6 @@ export class DocumentComponent implements AfterViewInit {
 		this.zoom(scaleFactor, event.clientX, event.clientY);
 	}
 
-	@HostListener('touchstart', ['$event'])
 	onTouchStart(event: TouchEvent) {
 		if (event.touches.length === 2) {
 			this.isPanning = true;
@@ -151,7 +149,6 @@ export class DocumentComponent implements AfterViewInit {
 		}
 	}
 
-	@HostListener('touchmove', ['$event'])
 	onTouchMove(event: TouchEvent) {
 		if (!this.isPanningEnabled) return; // Check if panning is enabled
 
@@ -183,7 +180,6 @@ export class DocumentComponent implements AfterViewInit {
 		}
 	}
 
-	@HostListener('touchend')
 	onTouchEnd() {
 		this.isPanning = false;
 		this.lastTouchDistance = 0;
@@ -308,7 +304,6 @@ export class DocumentComponent implements AfterViewInit {
 		this.zoom(scaleFactor, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
 	}
 
-	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		this.isDragging = false;
 		this.dragStartX = event.clientX;
@@ -317,7 +312,6 @@ export class DocumentComponent implements AfterViewInit {
 		this.lastY = event.clientY;
 	}
 
-	@HostListener('mousemove', ['$event'])
 	onMouseMove(event: MouseEvent) {
 		if (!this.isPanningEnabled) return; // Check if panning is enabled
 
@@ -344,7 +338,6 @@ export class DocumentComponent implements AfterViewInit {
 		}
 	}
 
-	@HostListener('mouseup')
 	onMouseUp() {
 		this.lastX = 0;
 		this.lastY = 0;
@@ -357,7 +350,6 @@ export class DocumentComponent implements AfterViewInit {
 		this.ctx.stroke();
 	}
 
-	@HostListener('click', ['$event'])
 	onClick(event: MouseEvent) {
 
 		if (!this.isDragging) {

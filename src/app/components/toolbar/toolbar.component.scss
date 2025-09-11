@@ -89,6 +89,14 @@
 	}
 }
 
+@media (max-width: 1400px) {
+
+	.btn-group:last-child {
+		display: none !important;
+	}
+
+}
+
 @media (max-width: 1200px) {
 
 	.btn-group,
